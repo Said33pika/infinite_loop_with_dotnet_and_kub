@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Application
+metadata:
+  name: helloworld-application
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://gitlab.com/Said33pika/infinite_loop_with_dotnet_and_kub.git
+    targetRevision: HEAD
+    path: helloworld
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: helloworldapp #since argocd is running inside the kub cluster and not as an external tool
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true
