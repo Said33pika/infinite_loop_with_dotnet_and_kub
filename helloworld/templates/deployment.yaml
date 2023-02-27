@@ -1,29 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "helloworld.fullname" . }}
+  name: helloworld-deployment
   labels:
-    app.kubernetes.io/name: {{ include "helloworld.name" . }}
-    helm.sh/chart: {{ include "helloworld.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app: helloworld
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "helloworld.name" . }} 
-      app.kubernetes.io/instance: {{ .Release.name }}
+      app: helloworld
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "helloworld.name" . }} 
-        app.kubernetes.io/instance: {{ .Release.name }}
+        app: helloworld
     spec:
       containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: 8080
-              protocol: TCP
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
