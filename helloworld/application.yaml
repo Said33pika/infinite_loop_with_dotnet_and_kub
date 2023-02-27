@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Application
 metadata:
-  name: helloworld-application
+  name: {{ include "helloworld.fullname" . }}
   namespace: argocd
 spec:
   project: default
